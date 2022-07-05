@@ -2,8 +2,6 @@
 
 import requests                         # need this for Get/Post/Delete
 import json
-import sys
-from prettytable import PrettyTable
 
 # These are placed here for convenience - in the real world, one would not embed these values in a script to be redistributed
 # Be sure to clear these values before sharing with others.

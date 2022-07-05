@@ -2,12 +2,10 @@
 
 import requests                         # need this for Get/Post/Delete
 import json
-import sys
-from prettytable import PrettyTable
 
 # These are placed here for convenience - in the real world, one would not embed these values in a script to be redistributed
 # Be sure to clear these values before sharing with others.
-my_token = "JBNnfvAa8fdXBoZQsewLcYrnp1-fOEG9onESSPqrj_jzgfVQCYYKuMmL0w0zh--5"
+my_token = ""
 
 # Now we are just defining a function to perform the same thing we did in the last example... this will allow us to call it whenever we want.
 def get_access_token(my_token):
@@ -22,7 +20,7 @@ def get_access_token(my_token):
 access_token = get_access_token(my_token)
 
 # Based on the API URL, we need to supply a couple additional pieces of information - first, the ORG ID:
-org_id = "b7793958-b6b6-4916-a008-40c5c47ec24c"
+org_id = ""
 
 # We must also provide the ID of the group to add users to... we are using the python "input" method to request user input:
 group_id = input("Please type in the group ID to add the user to: ")
