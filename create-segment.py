@@ -26,9 +26,9 @@ def get_access_token(my_token):
 # introducing some error checking here.  If the response from our API doesn't return a HTTP 200 code, we print out the
 # error message.  This will aid us in troubleshooting later.
 def get_nsxt_proxy(ORGID, SDDCID, access_token):
-    myHeader = {'csp-auth-token': access_token}
-    myURL = f"https://vmc.vmware.com/vmc/api/orgs/{ORGID}/sddcs/{SDDCID}"
-    response = requests.get(myURL, headers=myHeader)
+    my_header = {'csp-auth-token': access_token}
+    my_url = f"https://vmc.vmware.com/vmc/api/orgs/{ORGID}/sddcs/{SDDCID}"
+    response = requests.get(my_url, headers=my_header)
     json_response = response.json()
     if response.status_code == 200:
         proxy_url = json_response['resource_config']['nsx_api_endpoint_url']
@@ -44,4 +44,40 @@ access_token = get_access_token(my_token)
 nsx_proxy = get_nsxt_proxy(ORGID, SDDCID, access_token)
 
 
-# Now let's create our segment
+# Now let's create our segment.  Before we start, we'll need to define a number of additional variables we need to
+# create the segment.
+segment_name = ""
+gateway_address = ""
+cidr_range = ""
+domain_name = ""
+routing_type = ""
+
+# These variables need to be loaded into a JSON payload for the PUT function
+json_data = {
+    "type": routing_type,
+    "display_name": segment_name,
+    "id": segment_name,
+    "domain_name": domain_name,
+    "subnets": [
+        {
+            "dhcp_ranges": [cidr_range],
+            "gateway_address": gateway_address
+        }
+    ]
+}
+
+
+# Ok, now we need to send this JSON payload to the NSX RP to create the new segment.  We can do this either with a PUT
+# or a PATCH.  A PUT will create a new segment and a PATCH will either create a new segment, if it doesn't exist, or
+# modify the segment with the matching ID.  A PATCH function is great if you need to modify the connectivity of a
+# segment or change the gateway address, etc.
+my_header = {'csp-auth-token': access_token}
+my_url = f'{nsx_proxy}/policy/api/v1/infra/tier-1s/cgw/segments/{segment_name}'
+response = requests.put(my_url, headers=my_header, json=json_data)
+json_response = response.json()
+if response.status_code == 200:
+    print(f'Segment {segment_name} was created successfully')
+else:
+    print("There was an error. Check the syntax.")
+    print(f'API call failed with status code {response.status_code}. URL: {my_url}.')
+    print(json_response['error_message'])
