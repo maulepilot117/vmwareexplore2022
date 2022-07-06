@@ -61,5 +61,6 @@ if response.status_code == 200:
 
 else:
     print("There was an error. Check the syntax.")
-    print (f'API call failed with status code {response.status_code}. URL: {my_url}.')
+    print(f'API call failed with status code {response.status_code}. URL: {my_url}.')
     print(json_response['error_message'])
+    
