@@ -3,8 +3,7 @@
 import requests                         # need this for Get/Post/Delete
 import json
 
-# These are placed here for convenience - in the real world, one would not embed these values in a script to be redistributed
-# Be sure to clear these values before sharing with others.
+# Initial set of variables to define, so we can get started.
 my_token = ""
 ORGID = ""
 SDDCID = ""
@@ -35,7 +34,7 @@ def get_nsxt_proxy(ORGID, SDDCID, access_token):
         return proxy_url
     else:
         print("There was an error. Check the syntax.")
-        print(f'API call failed with status code {response.status_code}. URL: {myURL}.')
+        print(f'API call failed with status code {response.status_code}. URL: {my_url}.')
         print(json_response['error_message'])
 
 
