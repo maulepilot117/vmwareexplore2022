@@ -25,7 +25,7 @@ def get_nsxt_proxy(ORGID, SDDCID, access_token):
     response = requests.get(my_url, headers=my_header)
     json_response = response.json()
     if response.status_code == 200:
-        proxy_url = json_response['resource_config']['nsx_api_endpoint_url']
+        proxy_url = json_response['resource_config']['nsx_api_public_endpoint_url']
         return proxy_url
     else:
         print("There was an error. Check the syntax.")
@@ -63,4 +63,3 @@ else:
     print("There was an error. Check the syntax.")
     print(f'API call failed with status code {response.status_code}. URL: {my_url}.')
     print(json_response['error_message'])
-    
