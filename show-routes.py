@@ -1,11 +1,14 @@
+#!/usr/bin/env python3
+
 import requests                         # need this for Get/Post/Delete
 import json
+import operator
 from prettytable import PrettyTable
 
 # Initial set of variables to define, so we can get started.
-my_token = ""
-ORGID = ""
-SDDCID = ""
+my_token = "433HB1OOMp5N8m9wwvpSvTopzNfP7BMdXDbK7En8gojtZwFyZ86BfPjEHcmKuaRz"
+ORGID = "b7793958-b6b6-4916-a008-40c5c47ec24c"
+SDDCID = "762f5f7b-0cdb-4ba2-b70f-29979b24372c"
 
 
 # Here we have defined the function to retrieve our access token
@@ -45,7 +48,7 @@ response = requests.get(my_url, headers=my_header)
 json_response = response.json()
 if response.status_code == 200:
     t0_routes = json_response['results'][1]['route_entries']
-    print(t0_routes)
+    # print(t0_routes)
 
     # pretty_data = json.dumps(json_response, indent=4)
     # print(pretty_data)
@@ -55,8 +58,7 @@ if response.status_code == 200:
     #     route_table.add_row([routes['route_type'], routes['network'], routes['admin_distance'], routes['next_hop']])
     # print('T0 Routes')
     # print('Route Type Legend:')
-    # print(
-    #     't0c - Tier-0 Connected\nt0s - Tier-0 Static\nb   - BGP\nt0n - Tier-0 NAT\nt1s - Tier-1 Static\nt1c - Tier-1 Connected\nisr: Inter-SR')
+    # print('t0c - Tier-0 Connected\nt0s - Tier-0 Static\nb   - BGP\nt0n - Tier-0 NAT\nt1s - Tier-1 Static\nt1c - Tier-1 Connected\nisr: Inter-SR')
     # print(route_table.get_string(sort_key=operator.itemgetter(1, 0), sortby="Network", reversesort=True))
 
 else:
