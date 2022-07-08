@@ -6,9 +6,9 @@ import operator
 from prettytable import PrettyTable
 
 # Initial set of variables to define, so we can get started.
-my_token = "433HB1OOMp5N8m9wwvpSvTopzNfP7BMdXDbK7En8gojtZwFyZ86BfPjEHcmKuaRz"
-ORGID = "b7793958-b6b6-4916-a008-40c5c47ec24c"
-SDDCID = "762f5f7b-0cdb-4ba2-b70f-29979b24372c"
+my_token = ""
+ORGID = ""
+SDDCID = ""
 
 
 # Here we have defined the function to retrieve our access token
