@@ -47,7 +47,6 @@ nsx_proxy = get_nsxt_proxy(ORGID, SDDCID, access_token)
 # create the segment.
 segment_name = ""
 gateway_address = ""
-cidr_range = ""
 domain_name = ""
 routing_type = ""
 
@@ -59,7 +58,6 @@ json_data = {
     "domain_name": domain_name,
     "subnets": [
         {
-            "dhcp_ranges": [cidr_range],
             "gateway_address": gateway_address
         }
     ]
