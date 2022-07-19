@@ -42,31 +42,35 @@ nsx_proxy = get_nsxt_proxy(ORGID, SDDCID, access_token)
 # We need to define all the variables for the compute gateway firewall rule we want to create.
 action = ""
 destination_group = ""
-direction = "IN_OUT"
-disabled = False
 display_name = ""
-ip_protocol = "IPV4_IPV6"
 logged = False
-scope = ""
 services = ""
-source_groups = ""
+source_group = ""
 sequence_number = ""
 
 # Like the segment creation, we need to load all of these variables into a JSON payload
 json_data = {
     "action": action,
-    "destination_group": destination_group,
-    "direction": direction,
-    "disabled": disabled,
+    "destination_groups": [
+        f'/infra/domains/cgw/groups/{destination_group}'
+    ],
+    "direction": "IN_OUT",
+    "disabled": False,
     "display_name": display_name,
     "id": display_name,
-    "ip_protocol": ip_protocol,
+    "ip_protocol": "IPV4_IPV6",
     "logged": logged,
     "profiles": ["ANY"],
     "resource_type": "Rule",
-    "scope": scope,
-    "services": services,
-    "source_group": source_groups,
+    "scope": [
+        "/infra/labels/cgw-all"
+    ],
+    "services": [
+        f'/infra/services/{services}'
+    ],
+    "source_groups": [
+        f'/infra/domains/cgw/groups/{source_group}'
+    ],
     "sequence_number": sequence_number
 }
 
