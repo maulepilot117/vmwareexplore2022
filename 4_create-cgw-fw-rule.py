@@ -2,6 +2,7 @@
 
 import requests                         # need this for Get/Post/Delete
 import json
+import sys
 
 # Initial set of variables to define, so we can get started.
 my_token = ""
@@ -13,7 +14,8 @@ SDDCID = ""
 def get_access_token(my_token):
     params = {'refresh_token': my_token}
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-    response = requests.post('https://console.cloud.vmware.com/csp/gateway/am/api/auth/api-tokens/authorize', params=params, headers=headers)
+    response = requests.post('https://console.cloud.vmware.com/csp/gateway/am/api/auth/api-tokens/authorize',
+                             params=params, headers=headers)
     json_response = response.json()
     access_token = json_response['access_token']
     return access_token
@@ -40,13 +42,13 @@ nsx_proxy = get_nsxt_proxy(ORGID, SDDCID, access_token)
 
 
 # We need to define all the variables for the compute gateway firewall rule we want to create.
-action = ""
-destination_group = ""
-display_name = ""
+action = "ALLOW"
+destination_group = "vmware-explore-dest"
+display_name = "vmware-explore-cgw-fw-rule-1"
 logged = False
-services = ""
-source_group = ""
-sequence_number = ""
+services = "HTTPS"
+source_group = "vmware-explore-src"
+sequence_number = "1001"
 
 # Like the segment creation, we need to load all of these variables into a JSON payload
 json_data = {
@@ -84,4 +86,4 @@ if response.status_code == 200:
 else:
     print("There was an error. Check the syntax.")
     print(f'API call failed with status code {response.status_code}. URL: {my_url}.')
-    print(json_response['error_message'])
+    sys.exit(json_response['error_message'])

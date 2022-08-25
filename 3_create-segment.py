@@ -2,6 +2,7 @@
 
 import requests                         # need this for Get/Post/Delete
 import json
+import sys
 
 # Initial set of variables to define, so we can get started.
 my_token = ""
@@ -13,7 +14,8 @@ SDDCID = ""
 def get_access_token(my_token):
     params = {'refresh_token': my_token}
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-    response = requests.post('https://console.cloud.vmware.com/csp/gateway/am/api/auth/api-tokens/authorize', params=params, headers=headers)
+    response = requests.post('https://console.cloud.vmware.com/csp/gateway/am/api/auth/api-tokens/authorize',
+                             params=params, headers=headers)
     json_response = response.json()
     access_token = json_response['access_token']
     return access_token
@@ -35,7 +37,7 @@ def get_nsxt_proxy(ORGID, SDDCID, access_token):
     else:
         print("There was an error. Check the syntax.")
         print(f'API call failed with status code {response.status_code}. URL: {my_url}.')
-        print(json_response['error_message'])
+        sys.exit(json_response['error_message'])
 
 
 # Here we are calling the function to retrieve the access token and NSX proxy URL and store them as variables.
@@ -45,10 +47,10 @@ nsx_proxy = get_nsxt_proxy(ORGID, SDDCID, access_token)
 
 # Now let's create our segment.  Before we start, we'll need to define a number of additional variables we need to
 # create the segment.
-segment_name = ""
-gateway_address = ""
-domain_name = ""
-routing_type = ""
+segment_name = "vmware-explore-seg-1"
+gateway_address = "10.150.60.1/24"
+domain_name = "vmc.local"
+routing_type = "ROUTED"
 
 # These variables need to be loaded into a JSON payload for the PUT function
 json_data = {
@@ -77,4 +79,4 @@ if response.status_code == 200:
 else:
     print("There was an error. Check the syntax.")
     print(f'API call failed with status code {response.status_code}. URL: {my_url}.')
-    print(json_response['error_message'])
+    sys.exit(json_response['error_message'])
